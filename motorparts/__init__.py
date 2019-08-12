@@ -26,18 +26,20 @@ PROFILE_URL = 'https://www.mopar.com/moparsvc/user/getProfile'
 TOKEN_URL = 'https://www.mopar.com/moparsvc/token'
 TOW_URL = 'https://www.mopar.com/moparsvc/vehicle/tow-guide/vin'
 VHR_URL = 'https://www.mopar.com/moparsvc/getVHR'
-REMOTE_LOCK_COMMAND_URL = 'https://www.mopar.com/moparsvc/connect/lock'
-REMOTE_ENGINE_COMMAND_URL = 'https://www.mopar.com/moparsvc/connect/engine'
-REMOTE_ALARM_COMMAND_URL = 'https://www.mopar.com/moparsvc/connect/alarm'
+REMOTE_COMMAND_URL = 'https://www.mopar.com/moparsvc/remoteCommands'
+REMOTE_STATUS_URL = 'https://www.mopar.com/moparsvc/vehicle/remote/status'
+REMOTE_LOCK_COMMAND_URL = 'https://www.mopar.com/moparsvc/remoteCommands'
+REMOTE_ENGINE_COMMAND_URL = 'https://www.mopar.com/moparsvc/remoteCommands'
+REMOTE_ALARM_COMMAND_URL = 'https://www.mopar.com/moparsvc/remoteCommands'
 COOKIE_PATH = './motorparts_cookies.pickle'
 ATTRIBUTION = 'Information provided by www.mopar.com'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' \
              '(KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'
 COMMAND_LOCK = 'LOCK'
 COMMAND_UNLOCK = 'UNLOCK'
-COMMAND_ENGINE_ON = 'START'
-COMMAND_ENGINE_OFF = 'STOP'
-COMMAND_HORN = 'HORN_LIGHT'
+COMMAND_ENGINE_ON = 'engineon'
+COMMAND_ENGINE_OFF = 'engineoff'
+COMMAND_HORN = 'HORN'
 SUPPORTED_COMMANDS = [COMMAND_LOCK, COMMAND_UNLOCK, COMMAND_ENGINE_ON,
                       COMMAND_ENGINE_OFF, COMMAND_HORN]
 
@@ -208,7 +210,7 @@ def _remote_status(session, service_id, uuid, url, interval=3):
 
 
 @token
-def remote_command(session, command, vehicle_index, poll=True):
+def remote_command(session, command, vehicle_index, poll=False):
     """Send a remote command."""
     if command not in SUPPORTED_COMMANDS:
         raise MoparError("unsupported command: " + command)
