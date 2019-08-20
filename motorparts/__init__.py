@@ -199,7 +199,7 @@ def get_summary(session):
 def _remote_status(session, service_id, uuid, url, interval=3):
     """Poll for remote command status."""
     _LOGGER.info('polling for status')
-    resp = session.get(url, params={
+    resp = session.get(REMOTE_STATUS_URL, params={
         'remoteServiceRequestID':service_id,
         'uuid':uuid
     }).json()
