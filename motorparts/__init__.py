@@ -210,7 +210,7 @@ def _remote_status(session, service_id, uuid, url, interval=3):
 
 
 @token
-def remote_command(session, command, vehicle_index, poll=False):
+def remote_command(session, command, vehicle_index, poll=True):
     """Send a remote command."""
     if command not in SUPPORTED_COMMANDS:
         raise MoparError("unsupported command: " + command)
@@ -229,7 +229,7 @@ def remote_command(session, command, vehicle_index, poll=False):
     }).json()
     if poll:
         uuid = profile['vehicles'][vehicle_index]['uuid']
-        service_id = resp['serviceRequestId']
+        service_id = resp['customerServiceId']
         return _remote_status(session, service_id, uuid, url)
     return 'submitted'
 
